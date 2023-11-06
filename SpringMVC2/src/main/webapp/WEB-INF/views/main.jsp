@@ -38,11 +38,19 @@
   		$.each(data, function(index, obj) {
   			listHtml+="<tr>";
   	  		listHtml+="<td>"+obj.idx+"</td>";
-  			listHtml+="<td>"+obj.title+"</td>";
+  			listHtml+="<td><a href='javascript:goContent("+obj.idx+")'>"+obj.title+"</a></td>";
   			listHtml+="<td>"+obj.writer+"</td>";
   			listHtml+="<td>"+obj.indate+"</td>";
   			listHtml+="<td>"+obj.count+"</td>";
   			listHtml+="</tr>";
+  			
+  			listHtml+="<tr id='c"+obj.idx+"' style='display:none'>";
+  	  		listHtml+="<td>내용</td>";
+  			listHtml+="<td colspan='4'>";
+  			listHtml+="<textarea rows='7' class='form-control'>"+obj.content+"</textarea>";
+  			listHtml+="</td>";
+  			listHtml+="</tr>";
+  			
   		});
   		listHtml+= "<tr>";
   		listHtml+= "<td colspan='5'>";
@@ -80,7 +88,6 @@
 			dataType: "json",
 			success: function() {
 				loadList();
-				redirect:/boardList.do;
 			},
 				
 			error: function() {
@@ -91,6 +98,12 @@
 		$("#content").val("");
 		$("#writer").val("");
 		
+  	}
+  	
+  	function goContent(idx) {
+  		
+  		$("#c"+idx).css("display","table-row");
+  		
   	}
   	
   </script>
