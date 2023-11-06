@@ -39,7 +39,7 @@
     		</tr>
     		<tr>
     			<td colspan="2" align="center">
-    				<a class="btn btn-primary btn-sm">수정화면</a>
+    				<a href="${pageContext.request.contextPath}/boardUpdateForm.do/${vo.idx}" class="btn btn-primary btn-sm">수정화면</a>
     				<a href="${pageContext.request.contextPath}/boardDelete.do/${vo.idx}" class="btn btn-warning btn-sm">삭제</a>
     				<a href="${pageContext.request.contextPath}/boardList.do" class="btn btn-info btn-sm">목록</a>
     			</td>

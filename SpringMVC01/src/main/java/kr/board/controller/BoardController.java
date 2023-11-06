@@ -50,6 +50,19 @@ public class BoardController {
 	@GetMapping("/boardDelete.do/{idx}")
 	public String boardDelete(@PathVariable("idx") int idx) {	//	?idx=6
 		boardMapper.boardDelete(idx);
+ 		return "redirect:/boardList.do";
+	}
+	
+	@GetMapping("/boardUpdateForm.do/{idx}")
+	public String boardUpdateForm(@PathVariable("idx") int idx, Model model) {
+		Board vo = boardMapper.boardContent(idx);
+		model.addAttribute("vo", vo);
+		return "boardUpdate"; // boardUpdate.jsp
+	}
+	
+	@PostMapping("/boardUpdate.do")
+	public String boardUpdate(Board vo) {
+		boardMapper.boardUpdate(vo); // 수정
 		return "redirect:/boardList.do";
 	}
 	
