@@ -39,5 +39,17 @@ public class BoardController {
 		BoardMapper.boardInsert(vo); // 등록성공
 	}
 	
+	@GetMapping("/boardDelete.do")
+	@ResponseBody
+	public void boardDelete(@RequestParam("idx") int idx) {
+		BoardMapper.boardDelete(idx);
+	}
+	
+	@PostMapping("/boardUpdate.do")
+	@ResponseBody
+	public void boardUpdate(Board vo) {
+		BoardMapper.boardUpdate(vo);
+	}
+	
 }
  
