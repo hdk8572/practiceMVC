@@ -38,15 +38,55 @@
 		$.each(data, function(index, obj) {
 			listHtml+="<tr>";
 			listHtml+="<td>"+obj.idx+"</td>";
-			listHtml+="<td>"+obj.title+"</td>";
+			listHtml+="<td><a href=#>"+obj.title+"</td>";
 			listHtml+="<td>"+obj.writer+"</td>";
 			listHtml+="<td>"+obj.indate+"</td>";
 			listHtml+="<td>"+obj.count+"</td>";
 			listHtml+="</tr>";	
 		});
+		listHtml+="<tr>"
+		listHtml+="<td colspan='5'>"
+		listHtml+="<button class='btn btn-primary btn-sm' onclick='goForm()'>글쓰기</button>"
+		listHtml+="</td>"
+		listHtml+="</tr>"
 		listHtml+="</table>"
 		$("#view").html(listHtml);
+		
+		$("#view").css("display", "block");
+		$("#wform").css("display", "none");
 	}
+	function goForm() {
+		$("#view").css("display", "none");
+		$("#wform").css("display", "block");
+	}
+	function goList() {
+		$("#view").css("display", "block");
+		$("#wform").css("display", "none");
+	}
+	function goInsert() {
+		// var title = $("#title").val();
+		// var content = $("#content").val();
+		// var writer = $("#writer").val();
+		
+		var fData = $("#frm").serialize();
+		
+		$.ajax({
+			url:"boardInsert.do",
+			type:"post",
+			data: fData,
+			success: function() {
+				loadList();
+			},
+			error: function() {
+				alert(error)
+			}
+		});
+/*		$("#title").val("");
+		$("#content").val("");
+		$("#writer").val(""); */
+		$("#fclear").trigger("click"); // id="fclear"을 찾아가서 강제로 클릭 해준다
+	}
+	
   </script>
 </head>
 <body>
@@ -56,6 +96,31 @@
   <div class="panel panel-default">
     <div class="panel-heading">BOARD</div>
     <div class="panel-body" id="view">Panel Content</div>
+    <div class="panel-body" id="wform" style="display: none;">
+    	<form id="frm">
+		   	<table class="table">
+		   		<tr>
+	  				<td>제목</td>
+	  				<td><input type="text" id="title" name="title" class="form-control"></td>
+		   		</tr>
+		   		<tr>
+		   			<td>내용</td>
+		   			<td><textarea rows="7" id="content" name="content" class="form-control"></textarea></td>
+		   		</tr>
+		   		<tr>
+		   			<td>작성자</td>
+		   			<td><input type="text" id="writer" name="writer" class="form-control"></td>
+		   		</tr>
+		   		<tr>
+		   			<td colspan="2" align="center">
+		   				<button type="submit" class="btn btn-success btn-sm" onclick="goInsert()">등록</button>
+		   				<button type="reset" class="btn btn-warning btn-sm" id="fclear">취소</button>
+		   				<button type="button" class="btn btn-info btn-sm" onclick="goList()">리스트</button>
+		   			</td>
+		   		</tr>
+		   	</table>
+    	</form>
+    </div>
     <div class="panel-footer">인프런_스프1탄_황대경</div>
   </div>
 </div>
