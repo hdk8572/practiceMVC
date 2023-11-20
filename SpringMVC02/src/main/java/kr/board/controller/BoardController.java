@@ -18,53 +18,18 @@ import kr.board.mapper.BoardMapper;
 public class BoardController {
 	
 	@Autowired
-	private BoardMapper boardMapper;
+	private BoardMapper BoardMapper;
 	
-	// boardList.do
+	@RequestMapping("/")
+	public String main() {
+		return "main";
+	}
+	
 	@RequestMapping("/boardList.do")
-	public String boardList(Model model) {
-		
-		List<Board> list = boardMapper.getLists();
-		
-		model.addAttribute("list", list);
-		return "boardList"; // /WEB-INF/views/boardList.jsp --> forward
-	}
-	@GetMapping("/boardForm.do")
-	public String boardForm() {
-		return "boardForm";		//	/WEB-INF/views/boardForm.jsp --> forward
-	}
-	
-	@PostMapping("/boardInsert.do")
-	public String boardInsert(Board vo) { // title, content, writer --> 파라미터 수집
-		boardMapper.boardInsert(vo);
-		return "redirect:/boardList.do";
-	}
-	
-	@GetMapping("/boardContent.do")
-	public String boardContent(@RequestParam("idx") int idx, Model model) { // ?idx=6
-		Board vo = boardMapper.boardContent(idx);
-		boardMapper.boardCount(idx);
-		model.addAttribute("vo", vo);
-		return "boardContent";	//	/WEB-INF/views/boardContent.jsp --> forward
-	}
-	
-	@GetMapping("/boardDelete.do/{idx}")
-	public String boardDelete(@PathVariable("idx") int idx) {	//	?idx=6
-		boardMapper.boardDelete(idx);
- 		return "redirect:/boardList.do";
-	}
-	
-	@GetMapping("/boardUpdateForm.do/{idx}")
-	public String boardUpdateForm(@PathVariable("idx") int idx, Model model) {
-		Board vo = boardMapper.boardContent(idx);
-		model.addAttribute("vo", vo);
-		return "boardUpdate"; // boardUpdate.jsp
-	}
-	
-	@PostMapping("/boardUpdate.do")
-	public String boardUpdate(Board vo) {
-		boardMapper.boardUpdate(vo); // 수정
-		return "redirect:/boardList.do";
+	public List<Board> boardList() {
+		List<Board> list = BoardMapper.getLists();
+		return list; //  JSON 데이터 형식으로 변환해서 리턴하겠다.
 	}
 	
 }
+ 
