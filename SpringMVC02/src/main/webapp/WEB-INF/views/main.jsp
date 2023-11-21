@@ -17,7 +17,7 @@
 	function loadList() {
 		// 서버와 통신 : 게시판 리스트 가져오기
 		$.ajax({
-			url: "boardList.do",
+			url: "board/all",
 			type: "get",
 			dataType: "json",
 			success: makeView,
@@ -40,7 +40,7 @@
 			listHtml+="<td>"+obj.idx+"</td>";
 			listHtml+="<td id='t"+obj.idx+"'><a href='javascript:goContent("+obj.idx+")'>"+obj.title+"</td>";
 			listHtml+="<td>"+obj.writer+"</td>";
-			listHtml+="<td>"+obj.indate+"</td>";
+			listHtml+="<td>"+obj.indate.split(' ')[0]+"</td>";
 			listHtml+="<td id='cnt"+obj.idx+"'>"+obj.count+"</td>";
 			listHtml+="</tr>";
 			
@@ -81,7 +81,7 @@
 		var fData = $("#frm").serialize();
 		
 		$.ajax({
-			url:"boardInsert.do",
+			url:"board/new",
 			type:"post",
 			data: fData,
 			success: function() {
@@ -99,7 +99,7 @@
 	function goContent(idx) {
 		if($("#c"+idx).css("display")=="none") {
 			$.ajax({
-				url: "boardContent.do",
+				url: "board/"+idx,
 				type: "get",
 				data: {"idx": idx},
 				dataType: "json",
@@ -116,8 +116,8 @@
 			$("#c"+idx).css("display", "none"); // 안보이게
 			
 			$.ajax({
-				url: "boardCount.do",
-				type: "get",
+				url: "board/count/"+idx,
+				type: "put",
 				data: {"idx": idx},
 				dataType: "json",
 				success: function(data) {
@@ -131,8 +131,8 @@
 	}
 	function goDelete(idx) {
 		$.ajax({
-			url: "boardDelete.do",
-			type: "get",
+			url: "board/"+idx,
+			type: "delete",
 			data: {"idx": idx},
 			success: function() {
 				loadList();
@@ -155,9 +155,10 @@
 		var title = $("#nt"+idx).val();
 		var content = $("#ta"+idx).val();
 		$.ajax({
-			url: "boardUpdate.do",
-			type: "post",
-			data: {"idx":idx, "title":title, "content":content},
+			url: "board/update",
+			type: "put",
+			contentType: 'application/json;charset=utf-8',
+			data: JSON.stringify({"idx":idx, "title":title, "content":content}),
 			success: function() {
 				console.log("asd");
 				loadList();
