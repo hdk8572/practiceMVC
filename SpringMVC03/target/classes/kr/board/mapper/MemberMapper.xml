@@ -11,7 +11,7 @@
 	<insert id="register" parameterType="kr.board.entity.Member">
 		INSERT INTO
 		MEM_TBL(memID, memPassword, memName, memAge, memGender, memEmail, memProfile)
-		value(#{memID}, #{memPassword}, #{memName}, #{memAge}, #{memGender}, #{memEmail}, #{memProfile})
+		VALUES(#{memID}, #{memPassword}, #{memName}, #{memAge}, #{memGender}, #{memEmail}, #{memProfile})
 	</insert>
 	
 </mapper>
