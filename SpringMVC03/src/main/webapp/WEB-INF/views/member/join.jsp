@@ -21,14 +21,33 @@
  			data: {"memID": memID},
  			success: function(result) {
  				// 중복유무 출력(result=1 : 사용할 수 있는 아이디, 0: 사용할 수 없는 아이디)
- 				alert(result);
- 				console.log("asdasd");
+ 				if(result==1) {
+ 					$("#checkType").attr("class", "modal-content panel-success")
+ 					$("#checkMessage").html("사용할 수 있는 아이디입니다.");
+ 				} else {
+ 					$("#checkType").attr("class", "modal-content panel-warning")
+ 					$("#checkMessage").html("사용할 수 없는 아이디입니다.");
+ 				}
+ 				$("#myModal").modal();
  			},
  			error: function() {
  				alert("error111");
  			}
  		}); 		
   	}
+  	function passwordCheck() {
+  		var memPassword1 = $("#memPassword1").val();
+  		var memPassword2 = $("#memPassword2").val();
+  		
+  		if(memPassword1 != memPassword2) {
+  			$("#passMessage").html("비밀번호가 서로 일치하지 않습니다.");
+  		} else {
+  			$("#passMessage").html("");
+  			$("#memPassword").val(memPassword1);
+  		} 
+  		
+  	}
+  	
   </script>
 </head>
 <body>
@@ -40,6 +59,7 @@
     <div class="panel-heading">회원가입</div>
     <div class="panel-body">
 		<form action="${contextPath}/memRegister.do/" method="post">
+			<input type="hidden" id="memPassword" name="memPassword" value=""/>
 			<table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd">
 				<tr>
 					<td style="width: 110px; vertical-align: middle">아이디</td>
@@ -83,13 +103,34 @@
 				</tr>
 				<tr>
 					<td colspan="3" style="text-align: left">
-						<input type="submit" class="btn btn-primary btn-sm pull-right" value="등록">
+						<span id="passMessage" style="color: red"></span><input type="submit" class="btn btn-primary btn-sm pull-right" value="등록">
 					</td>
 				</tr>
 			</table>		
 		</form>
     </div>
+    
     <!-- 다이얼로그창 (Modal) -->
+	<div id="myModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    <!-- Modal content-->
+	    <div id="checkType" class="modal-content">
+	      <div class="modal-header panel-heading">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">메세지 확인</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p id="checkMessage"></p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	
+	  </div>
+	</div>
+    
     <div class="panel-footer">스프1탄_인프런(황대경)</div>
   </div>
 </div>
