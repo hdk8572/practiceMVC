@@ -14,4 +14,10 @@
 		VALUES(#{memID}, #{memPassword}, #{memName}, #{memAge}, #{memGender}, #{memEmail}, #{memProfile})
 	</insert>
 	
+	<select id="memLogin" parameterType="kr.board.entity.Member" resultType="kr.board.entity.Member">
+		SELECT *
+		FROM MEM_TBL
+		WHERE MEMID=#{memID} AND MEMPASSWORD=#{memPassword}
+	</select>
+	
 </mapper>
