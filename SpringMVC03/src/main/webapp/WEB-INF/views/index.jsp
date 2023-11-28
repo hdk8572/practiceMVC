@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,14 +23,45 @@
 </head>
 <body>
 
-<div class="container">
-  <jsp:include page="common/header.jsp"/>
-  <h3>Spring MVC03</h3>
-  <p>In this example, the navigation bar is hidden on small screens and replaced by a button in the top right corner (try to re-size this window).
-  <p>Only when the button is clicked, the navigation bar will be displayed.</p>
-</div>
+	<div class="container">
+		<jsp:include page="common/header.jsp" />
+		<c:if test="${empty mvo}">
+			<label>Spring MVC03</label>
+		</c:if>
+		<c:if test="${!empty mvo}">
+			<label>[사진]${mvo.memName}님 방문을 환영합니다.</label>
+		</c:if>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<img src="${contextPath}/resources/images/main.jpg"	style="width: 100%; height: 427px;" />
+			</div>
+			<div class="panel-body">
+				<ul class="nav nav-tabs">
+					<li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+					<li><a data-toggle="tab" href="#menu1">게시판</a></li>
+					<li><a data-toggle="tab" href="#menu2">공지사항</a></li>
+				</ul>
 
-    <div id="myMessage" class="modal fade" role="dialog">
+				<div class="tab-content">
+					<div id="home" class="tab-pane fade in active">
+						<h3>HOME</h3>
+						<p>Some content.</p>
+					</div>
+					<div id="menu1" class="tab-pane fade">
+						<h3>게시판</h3>
+						<p>Some content in menu 1.</p>
+					</div>
+					<div id="menu2" class="tab-pane fade">
+						<h3>공지사항</h3>
+						<p>Some content in menu 2.</p>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">스프1탄_인프런(황대경)</div>
+		</div>
+	</div>
+
+	<div id="myMessage" class="modal fade" role="dialog">
 	  <div class="modal-dialog">
 	
 	    <!-- Modal content-->

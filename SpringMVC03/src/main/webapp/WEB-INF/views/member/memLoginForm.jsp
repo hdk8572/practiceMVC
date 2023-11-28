@@ -12,6 +12,16 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+	$(document).ready(function() {
+	 		if(${!empty msgType}) {
+			$("#messageType").attr("class", "modal-content panel-warning"); 
+ 			$("#myMessage").modal("show");
+	 		}
+	 	});
+  </script>
+  
+  
 </head>
 <body>
 <div class="container">
@@ -20,8 +30,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">로그인화면</div>
     <div class="panel-body">
-    	<form name="frm" action="${contextPath}/memLogin.do/" method="post">
-			<input type="hidden" id="memPassword" name="memPassword" value=""/>
+    	<form action="${contextPath}/memLogin.do/" method="post">
 			<table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd">
 				<tr>
 					<td style="width: 110px; vertical-align: middle">아이디</td>
