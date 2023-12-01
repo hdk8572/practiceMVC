@@ -141,6 +141,16 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.8</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.servlets/cos -->
+		<!-- cos API -->
+		<dependency>
+		    <groupId>com.servlets</groupId>
+		    <artifactId>cos</artifactId>
+		    <version>09May2002</version>
+		</dependency>
+		
+		
 				
 	
 		<!-- Test -->

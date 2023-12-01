@@ -25,4 +25,16 @@
 			   MEMAGE=#{memAge}, MEMGENDER=#{memGender}, MEMEMAIL=#{memEmail}
 			   WHERE MEMID=#{memID}
 	</update>
+	
+	<select id="getMember" resultType="kr.board.entity.Member">
+		SELECT *
+		FROM MEM_TBL
+		WHERE MEMID=#{memID}
+	</select>
+	
+	<update id="memProfileUpdate" parameterType="kr.board.entity.Member">
+		UPDATE MEM_TBL SET MEMPROFILE=#{memProfile}
+		WHERE MEMID=#{memID}
+	</update>
+	
 </mapper>
