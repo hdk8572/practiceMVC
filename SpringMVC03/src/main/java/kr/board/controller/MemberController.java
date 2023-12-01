@@ -182,8 +182,7 @@ public class MemberController {
 		File file = multi.getFile("memProfile");
 		if(file !=null) {	// 업로드가 된 상태(.png, .jpg, .gif)
 			// 이미지파일 여부를 체크 -> 이미지 파일이 아니면 삭제
-			String ext = file.getName().substring(file.getName().lastIndexOf(".")+1);
-			System.out.println("ext :"+ext);
+			String ext = file.getName().substring(file.getName().lastIndexOf(".")+1);	// 확장자명 확인
 			ext = ext.toUpperCase(); // PNG, GIF, JPG
 			if(ext.equals("PNG") || ext.equals("GIF") || ext.equals("JPG")) {
 				// 새로 업로드된 이미지(new->1.png), 현재 DB에 있는 이미지(old->4.png)

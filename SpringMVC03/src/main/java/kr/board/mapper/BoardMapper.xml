@@ -9,8 +9,8 @@
 	</select>
 	
 	<insert id="boardInsert" parameterType="kr.board.entity.Board">
-		insert into myboard(idx, title, content, writer)
-		values(myboard_idx.nextval, #{title}, #{content}, #{writer})
+		insert into myboard(idx, memID, title, content, writer)
+		values(myboard_idx.nextval, #{memID}, #{title}, #{content}, #{writer})
 	</insert>
 	
 	<select id="boardContent" parameterType="int" resultType="kr.board.entity.Board">

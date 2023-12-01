@@ -28,15 +28,6 @@
 		<c:if test="${empty mvo}">
 			<label>Spring MVC03</label>
 		</c:if>
-		<c:if test="${!empty mvo}">
-			<c:if test="${mvo.memProfile eq ''}">
-				<img src="${contextPath}/resources/images/person.png" style="widows: 50px; height: 50px">
-			</c:if>
-			<c:if test="${mvo.memProfile ne ''}">
-				<img src="${contextPath}/resources/upload/${mvo.memProfile}" style="widows: 50px; height: 50px">
-			</c:if>
-			<label>${mvo.memName}님 방문을 환영합니다.</label>
-		</c:if>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<img src="${contextPath}/resources/images/main.jpg"	style="width: 100%; height: 427px;" />
