@@ -10,8 +10,8 @@
 	
 	<insert id="register" parameterType="kr.board.entity.Member">
 		INSERT INTO
-		MEM_TBL(memID, memPassword, memName, memAge, memGender, memEmail, memProfile)
-		VALUES(#{memID}, #{memPassword}, #{memName}, #{memAge}, #{memGender}, #{memEmail}, #{memProfile})
+		MEM_STBL(memidx, memID, memPassword, memName, memAge, memGender, memEmail, memProfile)
+		VALUES((select IFNULL(MAX(memId)+1,1) from mem_stbl mem)#{memID}, #{memPassword}, #{memName}, #{memAge}, #{memGender}, #{memEmail}, #{memProfile})
 	</insert>
 	
 	<select id="memLogin" parameterType="kr.board.entity.Member" resultType="kr.board.entity.Member">

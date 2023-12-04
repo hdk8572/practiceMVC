@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import javax.swing.plaf.multi.MultiMenuItemUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,10 @@ public class MemberController {
 
 	@Autowired
 	MemberMapper memberMapper;
+	
+	// 패스워드 암호화
+	@Autowired
+	PasswordEncoder pwEncoder; 
 	
 	@RequestMapping("/memJoin.do")
 	public String memJoin() {
@@ -48,7 +53,7 @@ public class MemberController {
 		   memPassword1==null || memPassword1.equals("") ||
 		   memPassword2==null || memPassword2.equals("") ||
 		   m.getMemName()==null || m.getMemName().equals("") ||
-		   m.getMemAge()==0 ||
+		   m.getMemAge()==0 || m.getAuthList().size()==0 ||
 		   m.getMemGender()==null || m.getMemGender().equals("") ||
 		   m.getMemEmail()==null || m.getMemEmail().equals("")) {
 			// 누락메세지를 가지고 가기 => 객체바인딩
@@ -63,6 +68,12 @@ public class MemberController {
 		}
 			m.setMemProfile(""); // 사진이미지는 없다
 			// 회원을 테이블에 저장하기
+			// 추가: 비밀번호를 암호화 하기(API)
+			String encyptPw = pwEncoder.encode(m.getMemPassword());
+			m.setMemPassword(encyptPw);
+			
+			//  register() 수정
+			
 		int result = memberMapper.register(m);
 		if(result == 1) {	// 회원가입 성공 메세지
 			rttr.addFlashAttribute("msgType", "성공 메세지");
