@@ -69,7 +69,7 @@
 
 <div class="container">
   <jsp:include page="../common/header.jsp"/>
-  <h2>Spring MVC03</h2>
+  <h2>Spring MVC05</h2>
   <div class="panel panel-default">
     <div class="panel-heading">회원가입</div>
     <div class="panel-body">
@@ -115,6 +115,15 @@
 				<tr>
 					<td style="width: 110px; vertical-align: middle">이메일</td>
 					<td colspan="2"><input class="form-control" id="memEmail" name="memEmail" type="text" maxlength="20" placeholder="이메일을 입력하세요."/></td>
+				</tr>
+				<!-- 권한체크박스추가 -->
+				<tr>
+					<td style="width: 110px; vertical-align: middle">사용자 권한</td>
+					<td colspan="2">
+						<input type="checkbox" name="authList[0].auth" value="ROLE_USER"> ROLE_USER
+						<input type="checkbox" name="authList[1].auth" value="ROLE_MANAGER"> ROLE_MANAGER
+						<input type="checkbox" name="authList[2].auth" value="ROLE_AMDIN"> ROLE_AMDIN
+					</td>
 				</tr>
 				<tr>
 					<td colspan="3" style="text-align: left">

@@ -1,5 +1,7 @@
 package kr.board.entity;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -13,5 +15,6 @@ public class Member {
 	  private String memGender;
 	  private String memEmail;
 	  private String memProfile; //사진정보
-	
+	  private List<AuthVo> authList;
+	  
 }
