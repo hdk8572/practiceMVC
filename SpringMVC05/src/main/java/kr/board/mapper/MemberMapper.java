@@ -2,6 +2,8 @@ package kr.board.mapper;
 
 
 import org.apache.ibatis.annotations.Mapper;
+
+import kr.board.entity.AuthVo;
 import kr.board.entity.Member;
 
 // @Mapper - mybatis API
@@ -13,4 +15,5 @@ public interface MemberMapper {
 	public int memUpdate(Member mvo);	// 수정하기
 	public Member getMember(String memID);
 	public void memProfileUpdate(Member mvo);
+	public void authInsert(AuthVo authVo);
 }

@@ -1,6 +1,7 @@
 package kr.board.controller;
 
 import java.io.File;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import kr.board.entity.AuthVo;
 import kr.board.entity.Member;
 import kr.board.mapper.MemberMapper;
 
@@ -76,10 +78,24 @@ public class MemberController {
 			
 		int result = memberMapper.register(m);
 		if(result == 1) {	// 회원가입 성공 메세지
+			// 추가 : 권한테이블에 회원의 권한을 저장하기
+			List<AuthVo> list = m.getAuthList();
+			for(AuthVo authVO : list) {
+				if(authVO.getAuth()!=null) {
+					AuthVo saveVO = new AuthVo();
+					saveVO.setMemID(m.getMemID());		// 회원아이디
+					saveVO.setAuth(authVO.getAuth());	// 회원의권한
+					memberMapper.authInsert(saveVO);
+				}
+			}
+			
 			rttr.addFlashAttribute("msgType", "성공 메세지");
 			rttr.addFlashAttribute("msg", "회원가입에 성공했습니다.");
 			//  회원가입이 성공하면 => 로그인처리하기
-			session.setAttribute("mvo", m); 
+			//	getMember() -> 회원정보+권한정보
+			Member mvo = memberMapper.getMember(m.getMemID());
+			System.out.println(mvo);
+			session.setAttribute("mvo", mvo); 
 			return "redirect:/";
 		} else {			// 회원가입 실패 메세지
 			rttr.addFlashAttribute("msgType", "실패 메세지");

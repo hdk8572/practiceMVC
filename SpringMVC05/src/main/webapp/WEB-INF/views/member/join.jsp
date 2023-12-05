@@ -122,7 +122,7 @@
 					<td colspan="2">
 						<input type="checkbox" name="authList[0].auth" value="ROLE_USER"> ROLE_USER
 						<input type="checkbox" name="authList[1].auth" value="ROLE_MANAGER"> ROLE_MANAGER
-						<input type="checkbox" name="authList[2].auth" value="ROLE_AMDIN"> ROLE_AMDIN
+						<input type="checkbox" name="authList[2].auth" value="ROLE_ADMIN"> ROLE_ADMIN
 					</td>
 				</tr>
 				<tr>

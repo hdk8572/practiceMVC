@@ -1,40 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.board.mapper.MemberMapper">
 
-	<select id="registerCheck" resultType="kr.board.entity.Member">
-		SELECT *
-		FROM MEM_TBL
-		WHERE MEMID=#{memID}
-	</select>
-	
-	<insert id="register" parameterType="kr.board.entity.Member">
-		INSERT INTO
-		MEM_STBL(memidx, memID, memPassword, memName, memAge, memGender, memEmail, memProfile)
-		VALUES((select IFNULL(MAX(memId)+1,1) from mem_stbl mem)#{memID}, #{memPassword}, #{memName}, #{memAge}, #{memGender}, #{memEmail}, #{memProfile})
-	</insert>
-	
-	<select id="memLogin" parameterType="kr.board.entity.Member" resultType="kr.board.entity.Member">
-		SELECT *
-		FROM MEM_TBL
-		WHERE MEMID=#{memID} AND MEMPASSWORD=#{memPassword}
-	</select>
-	
-	<update id="memUpdate" parameterType="kr.board.entity.Member">
-		UPDATE MEM_TBL SET MEMPASSWORD=#{memPassword}, MEMNAME=#{memName},
-			   MEMAGE=#{memAge}, MEMGENDER=#{memGender}, MEMEMAIL=#{memEmail}
-			   WHERE MEMID=#{memID}
-	</update>
-	
-	<select id="getMember" resultType="kr.board.entity.Member">
-		SELECT *
-		FROM MEM_TBL
-		WHERE MEMID=#{memID}
-	</select>
-	
-	<update id="memProfileUpdate" parameterType="kr.board.entity.Member">
-		UPDATE MEM_TBL SET MEMPROFILE=#{memProfile}
-		WHERE MEMID=#{memID}
-	</update>
-	
+    <resultMap type="kr.board.entity.Member" id="memberMap">
+        <id property="memIdx" column="memIdx" />
+        <result property="memID" column="memID" />
+        <result property="memPassword" column="memPassword" />
+        <result property="memName" column="memName" />
+        <result property="memAge" column="memAge" />
+        <result property="memGender" column="memGender" />
+        <result property="memEmail" column="memEmail" />
+        <result property="memProfile" column="memProfile" />
+        <collection property="authList" resultMap="authMap">
+        </collection>
+    </resultMap>
+
+    <resultMap type="kr.board.entity.AuthVo" id="authMap">
+        <id property="no" column="no" />
+        <result property="memID" column="memID" />
+        <result property="auth" column="auth" />
+    </resultMap>
+
+    <select id="registerCheck" resultType="kr.board.entity.Member">
+        SELECT *
+        FROM mem_stbl
+        WHERE memID=#{memID}
+    </select>
+
+    <insert id="register" parameterType="kr.board.entity.Member">
+        INSERT INTO MEM_STBL(memIdx, memID, memPassword, memName, memAge, memGender, memEmail, memProfile)
+        VALUES((SELECT NVL(MAX(memIdx)+1,1) FROM mem_stbl mem), #{memID}, #{memPassword}, #{memName}, #{memAge}, #{memGender}, #{memEmail}, #{memProfile})
+    </insert>
+
+    <select id="memLogin" parameterType="kr.board.entity.Member" resultType="kr.board.entity.Member">
+        SELECT *
+        FROM mem_stbl
+        WHERE memID=#{memID} AND memPassword=#{memPassword}
+    </select>
+
+    <update id="memUpdate" parameterType="kr.board.entity.Member">
+        UPDATE mem_stbl SET memPassword=#{memPassword}, memName=#{memName},
+               memAge=#{memAge}, memGender=#{memGender}, memEmail=#{memEmail}
+               WHERE memID=#{memID}
+    </update>
+
+    <!-- 수정(회원정보 + 권한정보) -->
+    <select id="getMember" resultMap="memberMap">
+        SELECT *
+        FROM MEM_STBL mem LEFT OUTER JOIN mem_auth auth ON
+        mem.memID=auth.memID WHERE mem.memID=#{memID}
+    </select>
+
+    <update id="memProfileUpdate" parameterType="kr.board.entity.Member">
+        UPDATE mem_stbl SET memProfile=#{memProfile}
+        WHERE memID=#{memID}
+    </update>
+
+    <insert id="authInsert" parameterType="kr.board.entity.AuthVo">
+        INSERT INTO mem_auth(memID, auth)
+        VALUES(#{memID}, #{auth})
+    </insert>
+
 </mapper>
