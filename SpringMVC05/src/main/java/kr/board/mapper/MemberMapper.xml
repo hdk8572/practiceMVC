@@ -32,10 +32,10 @@
         VALUES((SELECT NVL(MAX(memIdx)+1,1) FROM mem_stbl mem), #{memID}, #{memPassword}, #{memName}, #{memAge}, #{memGender}, #{memEmail}, #{memProfile})
     </insert>
 
-    <select id="memLogin" parameterType="kr.board.entity.Member" resultType="kr.board.entity.Member">
+    <select id="memLogin" parameterType="kr.board.entity.Member" resultMap="memberMap">
         SELECT *
-        FROM mem_stbl
-        WHERE memID=#{memID} AND memPassword=#{memPassword}
+        FROM mem_stbl mem LEFT OUTER JOIN mem_auth auth on
+        mem.memID = auth.memID where mem.memID=#{memID}
     </select>
 
     <update id="memUpdate" parameterType="kr.board.entity.Member">
