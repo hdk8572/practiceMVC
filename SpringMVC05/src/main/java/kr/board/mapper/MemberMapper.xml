@@ -60,5 +60,8 @@
         INSERT INTO mem_auth(memID, auth)
         VALUES(#{memID}, #{auth})
     </insert>
-
+    
+    <delete id="authDelete">
+    	DELETE from mem_auth where memID = #{memID}
+    </delete>
 </mapper>
